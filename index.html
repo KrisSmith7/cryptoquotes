@@ -4,14 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="./assets/css/style.css">
-
+    <link href="./assets/style.css"/>
     <title>CryptoQuotes</title>
 </head>
 <body>
-    
+    <header>
+        <h1>CryptoQuotes</h1>
+    </header>
+    <div id=quote-container></div>
 
-    <script src="./assets/js/script.js"></script>
+    <form id="user-form">
+        <label class="form-label" for="currency">Currency Type</label>
+        <input
+          name="currency" id="currency" type="text" autofocus="true" class="form-input"/>
+          <label class="form-label" for="date">Date Purchased</label>
+          <input
+          name="date" id="date" type="text" autofocus="true" class="form-input"/>
+          <label class="form-label" for="amount">Amount Purchased</label>
+          <input
+          name="amount" id="amount" type="text" autofocus="true" class="form-input"/>
+          <button type="submit" class="btn">Submit</button>
+      </form>
+
+      <div id=cryptodata></div>
+
+      <footer>&copy;2021</footer>
+
+      <script src="./assets/script.js"></script>
 </body>
 </html>
