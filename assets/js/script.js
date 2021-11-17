@@ -4,6 +4,13 @@
 // quotable io url 
 // https://api.quotable.io/random?tags=
 
+// function to fetch api requests > 
+    // function to get buy price at user date > 
+    // function to get current price 
+        // function to compare the two and get 'good vs. bad'
+            // good/bad fetch request to new api for quote
+                // populate quote with generated html
+
 var userForm = document.querySelector("#user-form");
 
 function submitHandler(currency, amount, date) {
