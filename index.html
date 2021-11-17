@@ -15,7 +15,15 @@
 
     <form id="user-form">
         <label class="form-label" for="currency">Currency Type</label>
-        <input name="currency" id="currency" type="text" autofocus="true" class="form-input"/>
+        <select id="currency">
+                <option value>Select one...</option>
+                <option value="BTC">Bitcoin</option>
+                <option value="ETH">Ethereum</option>
+                <option value="DOGE">Dogecoin</option>
+                <option value="SHIB">Shiba Inu</option>
+                <option value="AMP">Amp</option>
+              </select>
+        <!-- ORIGINAL CURRENCY INPUT: <input name="currency" id="currency" type="text" autofocus="true" class="form-input"/> -->
         <label class="form-label" for="date">Date Purchased</label>
         <input name="date" id="date" type="text" autofocus="true" class="form-input"/>
         <label class="form-label" for="amount">Amount Purchased</label>
