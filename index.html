@@ -5,15 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./assets/css/style.css"/>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <title>CryptoQuotes</title>
 </head>
-<body>
+<body class="bg-gray-100">
     <header>
-        <h1>CryptoQuotes</h1>
+        <h1 class="bg-gradient-to-b from-green-400 to-blue-300 text-5xl font-bold p-4 text-center text-green-900">
+            CryptoQuotes
+          </h1>
     </header>
-    <div id=quote-container></div>
+    <div id=quote-container class="bg-gray-300 block p-16 m-4"></div>
 
-    <form id="user-form">
+<main class="flex space-x-4">
+<div id="form" class="bg-blue-300 box-content h-76 w-64 p-4 border-4 m-4">
+    <form id="user-form" class = "flex flex-col space-y-4">
         <label class="form-label" for="currency">Currency Type</label>
         <select id="currency">
                 <option value>Select one...</option>
@@ -28,13 +33,14 @@
         <input name="date" id="date" type="text" autofocus="true" class="form-input"/>
         <label class="form-label" for="amount">Amount Purchased</label>
         <input name="amount" id="amount" type="text" autofocus="true" class="form-input"/>
-        <button type="submit" class="btn">Submit</button>
+        <button type="submit" class="btn bg-green-200 text-green-900 p-1">Submit</button>
       </form>
+    </div> 
+   
+    <div id=cryptodata class="flex bg-blue-300 box-content h-76 w-64 p-4 m-4 border-4">Placeholder text</div>
+</main>
 
-
-      <div id=cryptodata></div>
-
-      <footer>&copy;2021</footer>
+      <footer class="bg-green-200 text-green-900 text-center">&copy;2021</footer>
 
       <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
       <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
