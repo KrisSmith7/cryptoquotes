@@ -1,4 +1,4 @@
-
+@tailwind base;
 /* combobox styles for currency dropdown */
 .custom-combobox {
     position: relative;
