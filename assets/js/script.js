@@ -18,6 +18,9 @@ var userCoin;
 var currentCoinResult;
 var userCoinResult;
 
+var priceSpot = [];
+var buySpot = [];
+
 // var test = {data: {amount: 1}};
 
 // takes info from user input and passes through to fetch request
@@ -32,40 +35,62 @@ function submitHandler(event,currency, amount, date) {
     var formatDate = date.split("/");
 
     var userInput ={
-        currencyInput:currency,
+        currencyInput: currency,
+        amountInput: amount, 
         buyDay: formatDate[1],
         buyMonth: formatDate[0],
         buyYear: formatDate[2],
     }
+   
+    priceGrab(userInput);
 
-
-    console.log(currency, amount, date);
-console.log(userInput);
-
-
-console.log(currentApiCall(userInput))
- console.log(userApiCall(userInput))
-
-  
-        
 };
+
+function priceGrab(userInput) {
+    var priceSpot = currentApiCall(userInput);
+    var buySpot = userApiCall(userInput);
+
+    console.log('priceSpot:', priceSpot)
+    console.log('buyspot:', buySpot)
+
+    priceCompare(priceSpot, buySpot);
+}
+
+function priceCompare(now, then) {
+    console.log(now);
+    console.log(then);
+
+}
+
 
 function currentApiCall(input){
     var url = "https://api.coinbase.com/v2/prices/" + input.currencyInput + "-USD/spot";
-    fetch(url)
+    var priceSpot = fetch(url)
         .then(function(response) {
             // request was successful
             if (response.ok) {
-                response.json().then( result => console.log(result)
-            );
+                response.json().then( function(result) {
+                    var priceSpot = getCurrentPrice(result);
+                    console.log('priceSpot:', priceSpot)
+                    return priceSpot;
+                    
+                    
+            }) 
             } else {
                 // populate error area? 
             }
+            priceSpot = priceSpot;
+            console.log('priceSpot:', priceSpot)
+            return priceSpot;
         })
         .catch(function(error) {
             
             // populate error with unable to connect to coinbase
-        });    
+        });  
+        console.log('priceSpot:', priceSpot)
+        return priceSpot;
+        
+        
 }
 
 function userApiCall(input){
@@ -75,46 +100,56 @@ fetch(url)
         // request was successful
         if (response.ok) {
             response.json().then(function(result) {
-              return result;
+              var buySpot = getBuyPrice(result);
+
+              return buySpot;
+
+              
+              
 
         });
         
         } else {
             // populate error area? 
         }
+        return buySpot;
     })
     .catch(function(error) {
     //    populate error div with unable to connect to coinbase
     });    
+    return buySpot;
+   
 }
 
 function getCurrentPrice(input) {
-    console.log(input);
     var price = input.data.amount;
+    priceSpot.push(price);
 
-    console.log(price);
     return price;
+    
 }
 
 function getBuyPrice(input) {
-    console.log(input);
     var price = input.data.amount;
-    
-    console.log(price);
+    buySpot.push(price);
+
     return price;
+   
 }
 
 
-function gainOrLoss(a,b) {
-    console.log(a)
-    console.log(b)
+
+
+// function gainOrLoss(a,b) {
+//     console.log(a)
+//     console.log(b)
     // var buyPrice = getBuyPrice(userCoin);
     // console.log(buyPrice);
 
     // var currentPrice = getCurrentPrice(currentCoin);
     // console.log(currentPrice);
 
-}
+// }
 
 
 
