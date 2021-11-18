@@ -8,16 +8,16 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <title>CryptoQuotes</title>
 </head>
-<body class="bg-gray-100">
-    <header>
-        <h1 class="bg-gradient-to-b from-green-400 to-blue-300 text-5xl font-bold p-4 text-center text-green-900">
-            CryptoQuotes
+<body class="bg-blue-100 text-white font-mono">
+    <header class = "bg-gradient-to-t from-blue-900 to-blue-300">
+        <h1 class="font-sans bg-gradient-to-r from-blue-400 to-white text-5xl font-bold p-4 text-center text-transparent bg-clip-text">
+            Crypto<br>Quotes
           </h1>
     </header>
-    <div id=quote-container class="bg-gray-300 block p-16 m-4"></div>
+    <div id=quote-container class="border-2 border-gray-500 bg-gray-200 block p-8 m-4"></div>
 
-<main class="flex space-x-4">
-<div id="form" class="bg-blue-300 box-content h-76 w-64 p-4 border-4 m-4">
+<main class="flex space-x-2">
+<div id="form" class="bg-blue-900 box-content h-76 w-64 p-4 border-4 border-blue-500 m-4">
     <form id="user-form" class = "flex flex-col space-y-4">
         <label class="form-label" for="currency">Currency Type</label>
         <select id="currency">
@@ -33,14 +33,14 @@
         <input name="date" id="date" type="text" autofocus="true" class="form-input"/>
         <label class="form-label" for="amount">Amount Purchased</label>
         <input name="amount" id="amount" type="text" autofocus="true" class="form-input"/>
-        <button type="submit" class="btn bg-green-200 text-green-900 p-1">Submit</button>
+        <button type="submit" class="btn bg-green-200 text-green-900 font-bold w-24 p-2">Submit</button>
       </form>
     </div> 
    
-    <div id=cryptodata class="flex bg-blue-300 box-content h-76 w-64 p-4 m-4 border-4">Placeholder text</div>
+    <div id=cryptodata class="flex bg-blue-900 box-content h-76 w-64 p-4 m-4 border-blue-500 border-4">Placeholder text</div>
 </main>
 
-      <footer class="bg-green-200 text-green-900 text-center">&copy;2021</footer>
+      <footer class="bg-blue-200 text-blue-700 text-center p-2">&copy;2021</footer>
 
       <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
       <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
