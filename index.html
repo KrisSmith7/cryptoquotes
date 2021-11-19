@@ -4,37 +4,58 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link href="./assets/css/style.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aldrich&family=Raleway&display=swap">
+
+    <style>
+        .gradient {
+          background: linear-gradient(145deg, #0081A7 0%, #ACD8AA 100%);
+        }
+      </style>
+    
     <title>CryptoQuotes</title>
 </head>
-<body>
-    <header>
-        <h1>CryptoQuotes</h1>
-    </header>
-    <div id=quote-container></div>
 
-    <form id="user-form">
-        <label class="form-label" for="currency">Currency Type</label>
-        <select id="currency">
-                <option value>Select one...</option>
-                <option value="BTC">Bitcoin</option>
-                <option value="ETH">Ethereum</option>
-                <option value="DOGE">Dogecoin</option>
-                <option value="SHIB">Shiba Inu</option>
-                <option value="AMP">Amp</option>
+<body style ="font-family:'Raleway', sans-serif;" class="text-blue-900 text-2xl">
+    <!-- <header class = "bg-gradient-to-t from-blue-900 to-blue-300"> -->
+       <header class="bg-blue-900">
+        <h1 style="font-family: 'Aldrich', serif;" class="text-white text-7xl font-bold p-8 text-center">
+            CryptoQuotes
+          </h1>
+    </header>
+
+    <section class="gradient p-6">
+        <div id=quote-container class="border-2 border-gray-500 rounded-md bg-gray-200 block p-8 m-4"></div>
+    </section>
+
+<section class="pt-5 pb-5">
+    <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
+        <div id="form" class="bg-blue-100 shadow-xl box-content h-76 w-128 p-4 border-2 border-blue-900 rounded-md m-4">
+            <form id="user-form" class = "flex flex-col">
+        <label class="form-label pb-2" for="currency">Currency Type</label>
+        <select id="currency" class="shadow-inner pb-2 mb-4">
+            <option value>Select one...</option>
+            <option value="BTC">Bitcoin</option>
+            <option value="ETH">Ethereum</option>
+            <option value="DOGE">Dogecoin</option>
+            <option value="SHIB">Shiba Inu</option>
+            <option value="AMP">Amp</option>
         </select>
         <!-- ORIGINAL CURRENCY INPUT: <input name="currency" id="currency" type="text" autofocus="true" class="form-input"/> -->
-        <label class="form-label" for="date">Date Purchased</label>
-        <input name="date" id="date" type="text" autofocus="true" class="form-input" autocomplete="off"/>
-        <label class="form-label" for="amount">Amount Purchased</label>
-        <input name="amount" id="amount" type="text" autofocus="true" class="form-input"/>
-        <button type="submit" class="btn">Submit</button>
-      </form>
+        <label class="form-label pb-2" for="date">Date Purchased</label>
+        <input name="date" id="date" type="text" autofocus="true" class="form-input mb-4 shadow-inner"/>
+        <label class="form-label pb-2" for="amount">Amount Purchased</label>
+        <input name="amount" id="amount" type="text" autofocus="true" class="form-input mb-4 shadow-inner"/>
+        <button type="submit" class="btn bg-green-200 text-green-900 border-green-900 border-2 font-bold w-48 mt-2 p-2">Submit</button>
+    </form>
+</div> 
 
+<div id=cryptodata class="bg-blue-100 shadow-xl flex 0 box-content h-76 w-64 p-4 m-4 border-blue-900 rounded-md border-2">Placeholder text</div>
+</div>
+</section>
 
-      <div id=cryptodata></div>
-
-      <footer>&copy;2021</footer>
+      <footer class="bg-blue-900 text-blue-100 text-center p-4">&copy;2021 - Group 6</footer>
 
       <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
       <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
