@@ -12,6 +12,7 @@
                 // populate quote with generated html
 
 var userForm = document.querySelector("#user-form");
+var cryptoDisplay = document.querySelector("#cryptodata");
 var currentCoin;
 var userCoin;
 
@@ -53,23 +54,24 @@ function priceGrab(userInput) {
     console.log('priceSpot:', priceSpot)
     console.log('buyspot:', buySpot)
 
-    priceCompare(priceSpot, buySpot);
+    // priceCompare(priceSpot, buySpot);
 }
 
-function priceCompare(now, then) {
-    console.log(now);
-    console.log(then);
+// function priceCompare(now, then) {
+//     console.log(now);
+//     console.log(then);
 
-}
+// }
 
 
 function currentApiCall(input){
     var url = "https://api.coinbase.com/v2/prices/" + input.currencyInput + "-USD/spot";
-    var priceSpot = fetch(url)
+    var priceSpot = { async function() {
+        fetch(url)
         .then(function(response) {
             // request was successful
             if (response.ok) {
-                response.json().then( function(result) {
+                var priceSpot = response.json().then( function(result) {
                     var priceSpot = getCurrentPrice(result);
                     console.log('priceSpot:', priceSpot)
                     return priceSpot;
@@ -79,7 +81,7 @@ function currentApiCall(input){
             } else {
                 // populate error area? 
             }
-            priceSpot = priceSpot;
+            
             console.log('priceSpot:', priceSpot)
             return priceSpot;
         })
@@ -87,9 +89,12 @@ function currentApiCall(input){
             
             // populate error with unable to connect to coinbase
         });  
+    
         console.log('priceSpot:', priceSpot)
         return priceSpot;
-        
+    } }
+
+    console.log('priceSpot:', priceSpot)
         
 }
 
@@ -125,6 +130,7 @@ function getCurrentPrice(input) {
     var price = input.data.amount;
     priceSpot.push(price);
 
+    priceInfoElements(price);
     return price;
     
 }
@@ -133,8 +139,19 @@ function getBuyPrice(input) {
     var price = input.data.amount;
     buySpot.push(price);
 
+    priceInfoElements(price);
     return price;
+
    
+}
+
+// function to create price elements
+function priceInfoElements (input) {
+    var priceEl = document.createElement("div");
+    priceEl.textContent = input;
+
+    cryptoDisplay.append(priceEl);
+
 }
 
 
@@ -153,8 +170,9 @@ function getBuyPrice(input) {
 
 
 
-
+ 
 $("#date").datepicker();
+
 userForm.addEventListener("submit", submitHandler);
 
 
