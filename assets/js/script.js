@@ -68,7 +68,7 @@ function currentApiCall(input){
         .then(function(response) {
             // request was successful
             if (response.ok) {
-                var priceSpot = response.json().then( function(result) {
+                response.json().then( function(result) {
                     var priceSpot = getCurrentPrice(result);
                     localStorage.setItem("priceSpot", JSON.stringify(priceSpot));
                     console.log('priceSpot:', priceSpot)
@@ -132,7 +132,7 @@ function getCurrentPrice(input) {
     var price = input.data.amount;
     priceSpot.push(price);
 
-    priceInfoElements(price);
+    // priceInfoElements(price);
     return price;
     
 }
@@ -141,7 +141,7 @@ function getBuyPrice(input) {
     var price = input.data.amount;
     buySpot.push(price);
 
-    priceInfoElements(price);
+    // priceInfoElements(price);
     return price;
 }
 
