@@ -62,15 +62,15 @@ function priceGrab(userInput) {
 
 
 function currentApiCall(input){
+    setTimeout(function(){ 
     var url = "https://api.coinbase.com/v2/prices/" + input.currencyInput + "-USD/spot";
-    var priceSpot = { async function() {
-        fetch(url)
+    fetch(url)
         .then(function(response) {
             // request was successful
             if (response.ok) {
                 var priceSpot = response.json().then( function(result) {
                     var priceSpot = getCurrentPrice(result);
-                    localStorage.setItem("priceSpot", priceSpot);
+                    localStorage.setItem("priceSpot", JSON.stringify(priceSpot));
                     console.log('priceSpot:', priceSpot)
                     return priceSpot;
                     
@@ -89,21 +89,23 @@ function currentApiCall(input){
         });  
         //console.log('priceSpot:', priceSpot)
         return priceSpot;
-    } }
+    
 
-    console.log('priceSpot:', priceSpot)
+   
         
+}, 25) 
 }
 
 function userApiCall(input){
-var url = "https://api.coinbase.com/v2/prices/" + input.currencyInput + "-USD/spot?date=" + input.buyYear + "-" + input.buyMonth + "-" + input.buyDay;
-fetch(url)
-    .then(function(response) {
+    setTimeout(function(){
+    var url = "https://api.coinbase.com/v2/prices/" + input.currencyInput + "-USD/spot?date=" + input.buyYear + "-" + input.buyMonth + "-" + input.buyDay;
+    fetch(url)
+        .then(function(response) {
         // request was successful
         if (response.ok) {
             response.json().then(function(result) {
               var buySpot = getBuyPrice(result);
-              localStorage.setItem("buySpot", buySpot)
+              localStorage.setItem("buySpot", JSON.stringify(buySpot));
                 console.log("buySpot", buySpot);
               return buySpot;
 
@@ -123,6 +125,7 @@ fetch(url)
     return buySpot;
     
    
+}, 25)
 }
 
 function getCurrentPrice(input) {
@@ -143,13 +146,13 @@ function getBuyPrice(input) {
 }
 
 // function to create price elements
-function priceInfoElements (input) {
-    var priceEl = document.createElement("div");
-    priceEl.textContent = input;
+// function priceInfoElements (input) {
+//     var priceEl = document.createElement("div");
+//     priceEl.textContent = input;
 
-    cryptoDisplay.append(priceEl);
+//     cryptoDisplay.append(priceEl);
 
-}
+// }
 
 
 
@@ -181,8 +184,8 @@ var wisdom = "wisdom"
 
 function displayQuote(){
     setTimeout(function(){
-        var buySpot = localStorage.getItem("buySpot")
-        var priceSpot = localStorage.getItem("priceSpot")
+        var buySpot = JSON.parse(localStorage.getItem("buySpot"))
+        var priceSpot = JSON.parse(localStorage.getItem("priceSpot"))
         console.log(buySpot)
         console.log(priceSpot)
         if (buySpot < priceSpot ){
