@@ -50,17 +50,14 @@ function priceGrab(userInput) {
     var priceSpot = currentApiCall(userInput);
     var buySpot = userApiCall(userInput);
 
-    //console.log('priceSpot:', priceSpot)
-    //console.log('buyspot:', buySpot)
-
-    priceCompare(priceSpot, buySpot);
+    //priceCompare(priceSpot, buySpot);
 }
 
-function priceCompare(now, then) {
+//function priceCompare(now, then) {
     //console.log(now);
     //console.log(then);
 
-}
+//}
 
 
 function currentApiCall(input){
@@ -71,7 +68,8 @@ function currentApiCall(input){
             if (response.ok) {
                 response.json().then( function(result) {
                     var priceSpot = getCurrentPrice(result);
-                    //console.log('priceSpot:', priceSpot)
+                    localStorage.setItem("priceSpot", priceSpot);
+                    console.log('priceSpot:', priceSpot)
                     return priceSpot;
                     
                     
@@ -101,7 +99,8 @@ fetch(url)
         if (response.ok) {
             response.json().then(function(result) {
               var buySpot = getBuyPrice(result);
-                //console.log("buySpot", buySpot);
+              localStorage.setItem("buySpot", buySpot)
+                console.log("buySpot", buySpot);
               return buySpot;
 
               
@@ -118,14 +117,13 @@ fetch(url)
     //    populate error div with unable to connect to coinbase
     });    
     return buySpot;
+    
    
 }
 
 function getCurrentPrice(input) {
     var price = input.data.amount;
     priceSpot.push(price);
-    // save info to localStorage for displayQuote(); use
-    localStorage.setItem("priceSpot", price);
     return price;
     
 }
@@ -133,10 +131,7 @@ function getCurrentPrice(input) {
 function getBuyPrice(input) {
     var price = input.data.amount;
     buySpot.push(price);
-    // save info to localStorage for displayQuote(); use
-    localStorage.setItem("buySpot", price);
     return price;
-   
 }
 
 
@@ -167,39 +162,40 @@ var happiness = "happiness"
 var wisdom = "wisdom"
 
 function displayQuote(){
-    var buySpot = localStorage.getItem("buySpot")
-    var priceSpot = localStorage.getItem("priceSpot")
-    console.log(buySpot)
-    console.log(priceSpot)
-    if (buySpot < priceSpot ){
-        var chooseText = "happiness"
-        var quoteURL = "https://api.quotable.io/random?tags=" + chooseText
-        fetch (quoteURL)
-        .then (function (response){
-            return response.json()
-        })
-        .then (function(data){
-            console.log(data);
-            var quoteText = data.content;
-            var quoteEl = document.createElement("p")
-            quoteEl.innerText = "Make that money! -- " + quoteText
-            qContainer.appendChild(quoteEl)
-    
-        })
-    } else {
-        var chooseText = "wisdom" 
-        var quoteURL = "https://api.quotable.io/random?tags=" + chooseText
+    setTimeout(function(){
+        var buySpot = localStorage.getItem("buySpot")
+        var priceSpot = localStorage.getItem("priceSpot")
+        console.log(buySpot)
+        console.log(priceSpot)
+        if (buySpot < priceSpot ){
+            var chooseText = "happiness"
+            var quoteURL = "https://api.quotable.io/random?tags=" + chooseText
+            fetch (quoteURL)
+            .then (function (response){
+                return response.json()
+            })
+            .then (function(data){
+                console.log(data);
+                var quoteText = data.content;
+                var quoteEl = document.createElement("p")
+                quoteEl.innerText = "Make that money! -- " + quoteText
+                qContainer.appendChild(quoteEl)
+            })
+        } else {
+            var chooseText = "wisdom" 
+            var quoteURL = "https://api.quotable.io/random?tags=" + chooseText
         
-        fetch (quoteURL)
-        .then (function (response){
-            return response.json()
-        })
-        .then (function(data){
-            console.log(data);
-            var quoteText = data.content;
-            var quoteEl = document.createElement("p")
-            quoteEl.innerText = "Make that money! -- " + quoteText
-            qContainer.appendChild(quoteEl)
-        })
-    };
+            fetch (quoteURL)
+            .then (function (response){
+                return response.json()
+            })
+            .then (function(data){
+                console.log(data);
+                var quoteText = data.content;
+                var quoteEl = document.createElement("p")
+                quoteEl.innerText = "Make that money! -- " + quoteText
+                qContainer.appendChild(quoteEl)
+            })
+        };
+    }, 25);
 };
