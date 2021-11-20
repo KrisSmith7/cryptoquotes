@@ -22,6 +22,18 @@ var userCoinResult;
 var priceSpot = [];
 var buySpot = [];
 
+var down = ["Oof.. That's not good.", "Uh Oh.. Time to get a second job!", 
+            "HAHA.. If I don't laugh, i'll cry.", "Wow, that didn't go as planned!", 
+            "Oy vey..", "Looks like It's ramen for a week.", 
+            "I should have heeded the warnings.", ">.<", 
+            "TikTok made it look so easy...", "Maybe i should donate blood."];
+
+var up = ["HECK YEAH!!", "Let's get that bread!", 
+          "Make that money!", "And they said i couldn't do it!", 
+          ":O", "Steak for dinner!", 
+          "One, two, and a lambo for you!", "Hey look mom I made it!",
+          "Man, I wish i had a friend like me!", "High roller, comin through!"];
+
 // var test = {data: {amount: 1}};
 
 // takes info from user input and passes through to fetch request
@@ -45,6 +57,7 @@ function submitHandler(event,currency, amount, date) {
    
     priceGrab(userInput);
     displayQuote();
+    document.getElementById("user-form").reset();
 };
 
 function priceGrab(userInput) {
@@ -197,10 +210,15 @@ function displayQuote(){
             })
             .then (function(data){
                 console.log(data);
+                var quote = up[Math.floor(Math.random() * 10)];
                 var quoteText = data.content;
-                var quoteEl = document.createElement("p")
-                quoteEl.innerText = "Make that money! -- " + quoteText
-                qContainer.appendChild(quoteEl)
+                var quoteEl = document.getElementById("quote")
+                quoteEl.innerText = quote +" -- " + quoteText
+                var element = document.getElementById("quote-container")
+                console.log(element);
+                element.classList.remove("bg-gray-200")
+                element.classList.remove("bg-red-200")
+                element.classList.add("bg-green-200")
             })
         } else {
             var chooseText = "wisdom" 
@@ -212,11 +230,16 @@ function displayQuote(){
             })
             .then (function(data){
                 console.log(data);
+                var quote = down[Math.floor(Math.random() * 10)];
                 var quoteText = data.content;
-                var quoteEl = document.createElement("p")
-                quoteEl.innerText = "Make that money! -- " + quoteText
-                qContainer.appendChild(quoteEl)
+                var quoteEl = document.getElementById("quote")
+                quoteEl.innerText = quote +" -- " + quoteText
+                var element = document.getElementById("quote-container")
+                console.log(element);
+                element.classList.remove("bg-gray-200")
+                element.classList.remove("bg-green-200")
+                element.classList.add("bg-red-200")
             })
         };
-    }, 25);
+    }, 300);
 };
