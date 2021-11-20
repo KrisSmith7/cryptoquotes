@@ -12,6 +12,7 @@
                 // populate quote with generated html
 
 var userForm = document.querySelector("#user-form");
+var cryptoDisplay = document.querySelector("#cryptodata");
 var currentCoin;
 var userCoin;
 
@@ -61,14 +62,15 @@ function priceGrab(userInput) {
 
 
 function currentApiCall(input){
+    setTimeout(function(){ 
     var url = "https://api.coinbase.com/v2/prices/" + input.currencyInput + "-USD/spot";
-    var priceSpot = fetch(url)
+    fetch(url)
         .then(function(response) {
             // request was successful
             if (response.ok) {
                 response.json().then( function(result) {
                     var priceSpot = getCurrentPrice(result);
-                    localStorage.setItem("priceSpot", priceSpot);
+                    localStorage.setItem("priceSpot", JSON.stringify(priceSpot));
                     console.log('priceSpot:', priceSpot)
                     return priceSpot;
                     
@@ -77,7 +79,7 @@ function currentApiCall(input){
             } else {
                 // populate error area? 
             }
-            priceSpot = priceSpot;
+            // priceSpot = priceSpot;
             //console.log('priceSpot:', priceSpot)
             return priceSpot;
         })
@@ -87,19 +89,23 @@ function currentApiCall(input){
         });  
         //console.log('priceSpot:', priceSpot)
         return priceSpot;
+    
+
+   
         
-        
+}, 25) 
 }
 
 function userApiCall(input){
-var url = "https://api.coinbase.com/v2/prices/" + input.currencyInput + "-USD/spot?date=" + input.buyYear + "-" + input.buyMonth + "-" + input.buyDay;
-fetch(url)
-    .then(function(response) {
+    setTimeout(function(){
+    var url = "https://api.coinbase.com/v2/prices/" + input.currencyInput + "-USD/spot?date=" + input.buyYear + "-" + input.buyMonth + "-" + input.buyDay;
+    fetch(url)
+        .then(function(response) {
         // request was successful
         if (response.ok) {
             response.json().then(function(result) {
               var buySpot = getBuyPrice(result);
-              localStorage.setItem("buySpot", buySpot)
+              localStorage.setItem("buySpot", JSON.stringify(buySpot));
                 console.log("buySpot", buySpot);
               return buySpot;
 
@@ -119,11 +125,14 @@ fetch(url)
     return buySpot;
     
    
+}, 25)
 }
 
 function getCurrentPrice(input) {
     var price = input.data.amount;
     priceSpot.push(price);
+
+    // priceInfoElements(price);
     return price;
     
 }
@@ -131,8 +140,19 @@ function getCurrentPrice(input) {
 function getBuyPrice(input) {
     var price = input.data.amount;
     buySpot.push(price);
+
+    // priceInfoElements(price);
     return price;
 }
+
+// function to create price elements
+// function priceInfoElements (input) {
+//     var priceEl = document.createElement("div");
+//     priceEl.textContent = input;
+
+//     cryptoDisplay.append(priceEl);
+
+// }
 
 
 
@@ -150,8 +170,9 @@ function getBuyPrice(input) {
 
 
 
-
+ 
 $("#date").datepicker();
+
 userForm.addEventListener("submit", submitHandler);
 
 
@@ -163,8 +184,8 @@ var wisdom = "wisdom"
 
 function displayQuote(){
     setTimeout(function(){
-        var buySpot = localStorage.getItem("buySpot")
-        var priceSpot = localStorage.getItem("priceSpot")
+        var buySpot = JSON.parse(localStorage.getItem("buySpot"))
+        var priceSpot = JSON.parse(localStorage.getItem("priceSpot"))
         console.log(buySpot)
         console.log(priceSpot)
         if (buySpot < priceSpot ){
