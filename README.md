@@ -29,11 +29,11 @@ This is Project 1 of the Bootcamp. This website application is for your emotiona
 * (Placeholder)
 
 ## Websites
-* Deployed Application: (Placeholder)
+* Deployed Application: https://krissmith7.github.io/cryptoquotes/
 * Github Repository: https://github.com/KrisSmith7/cryptoquotes
 
 ## Links to portfolios with application on page
-* Austin Coats: (Placeholder)
-* Kristian Smith: (Placeholder)
-* Michael Cahill: (Placeholder)
+* Austin Coats: https://aucoats.github.io/portfolio-challenge/
+* Kristian Smith: https://krissmith7.github.io/newportfolio/
+* Michael Cahill: https://cahillmichael.github.io/mcahill-portfolio/
 * David Siedlarz: https://dsiedlarz90.github.io/Personal-Work-Portfolio/
