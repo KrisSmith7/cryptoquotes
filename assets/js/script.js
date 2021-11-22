@@ -11,6 +11,7 @@
             // good/bad fetch request to new api for quote
                 // populate quote with generated html
 
+//Global Arrays
 var userForm = document.querySelector("#user-form");
 var cryptoDisplay = document.querySelector("#cryptodata");
 var formDiv = document.querySelector("#form")
@@ -18,24 +19,24 @@ var buySpotOut = document.getElementById("buySpot");
 var priceSpotOut = document.getElementById("priceSpot");
 var differenceOut = document.getElementById("difference")
 var dateSpotOut = document.getElementById("dateSpot")
-
 var currentCoin;
 var userCoin;
-
 var currentCoinResult;
 var userCoinResult;
-
 var priceSpot = [];
 var buySpot = [];
+var happiness = "happiness"
+var wisdom = "wisdom"
 
 
-
+//Array for profit loss pre quote. Adds some humor
 var down = ["Oof...That's not good.", "Uh Oh...Time to get a second job!", 
             "HAHA...If I don't laugh, I'll cry.", "Wow, that didn't go as planned!", 
             "Oy vey..", "Looks like it's ramen for a week.", 
             "I should have heeded the warnings.", ">.<", 
             "TikTok made it look so easy...", "Maybe I should donate blood."];
 
+//Array for profit gain pre quote. Adds some humor
 var up = ["HECK YEAH!!", "Let's get that bread!", 
           "Make that money!", "And they said I couldn't do it!", 
           ":O", "Steak for dinner!", 
@@ -43,7 +44,7 @@ var up = ["HECK YEAH!!", "Let's get that bread!",
           "Man, I wish I had a friend like me!", "High roller, comin' through!"];
 
 
-// takes info from user input and passes through to fetch request
+//Takes info from user input and passes through to fetch request.
 function submitHandler(event,currency, amount, date) {
     event.preventDefault();
     
@@ -93,6 +94,7 @@ function submitHandler(event,currency, amount, date) {
         buyMonth: formatDate[0],
         buyYear: formatDate[2],
     }
+    //Save userInput to local storage
     localStorage.setItem("userInput", JSON.stringify(userInput));
    
     priceGrab(userInput);
@@ -104,13 +106,11 @@ function submitHandler(event,currency, amount, date) {
 function priceGrab(userInput) {
     var priceSpot = currentApiCall(userInput);
     var buySpot = userApiCall(userInput);
-
-    //priceCompare(priceSpot, buySpot);
 }
 
 
 
-
+//Calls for current price from CoinbaseAPI
 function currentApiCall(input){
     setTimeout(function(){ 
     var url = "https://api.coinbase.com/v2/prices/" + input.currencyInput + "-USD/spot";
@@ -131,7 +131,7 @@ function currentApiCall(input){
                 formDiv.classList.add("border-red-700");
                 formDiv.classList.add("bg-red-300");
                 
-                
+                //Covers failure of API with error message
                 var errorEl = document.createElement("p");
                 errorEl.id = "error-el"
                 errorEl.classList.add("text-red-700")
@@ -140,8 +140,6 @@ function currentApiCall(input){
                 userForm.insertBefore(errorEl, currencyLabel)
                 return; 
             }
-            // priceSpot = priceSpot;
-            //console.log('priceSpot:', priceSpot)
             return priceSpot;
         })
         .catch(function(error) {
@@ -151,7 +149,7 @@ function currentApiCall(input){
             formDiv.classList.add("border-red-700");
             formDiv.classList.add("bg-red-300");
         
-        
+            //Covers failure of API with error message
             var errorEl = document.createElement("p");
             errorEl.id = "error-el"
             errorEl.classList.add("text-red-700")
@@ -160,7 +158,6 @@ function currentApiCall(input){
             userForm.insertBefore(errorEl, currencyLabel)
             return;
         });  
-        //console.log('priceSpot:', priceSpot)
         return priceSpot;
     
 
@@ -169,6 +166,7 @@ function currentApiCall(input){
 }, 25) 
 }
 
+//Calls for user requested price from Coinbase API
 function userApiCall(input){
     setTimeout(function(){
     var url = "https://api.coinbase.com/v2/prices/" + input.currencyInput + "-USD/spot?date=" + input.buyYear + "-" + input.buyMonth + "-" + input.buyDay;
@@ -192,7 +190,7 @@ function userApiCall(input){
             formDiv.classList.add("border-red-700");
             formDiv.classList.add("bg-red-300");
                 
-                
+            //Covers failure of API with a error message   
             var errorEl = document.createElement("p");
             errorEl.id = "error-el"
             errorEl.classList.add("text-red-700")
@@ -209,7 +207,7 @@ function userApiCall(input){
         formDiv.classList.add("border-red-700");
         formDiv.classList.add("bg-red-300");
     
-    
+        //Covers failure of API with error message
         var errorEl = document.createElement("p");
         errorEl.id = "error-el"
         errorEl.classList.add("text-red-700")
@@ -242,7 +240,8 @@ function getBuyPrice(input) {
 
 
 
-// Calculates loss to date and prints information out on page.
+//Calculates loss to date and prints information out on page.
+//Prints the currency, date, and amount the user input along with current and previous price.
  function gainOrLoss() {
      setTimeout(function(){
         var userInput = JSON.parse(localStorage.getItem("userInput"))
@@ -273,17 +272,14 @@ function getBuyPrice(input) {
 
 
 
- 
+//Datepicker for form.
 $("#date").datepicker({maxDate: "0"});
 
-document.getElementById("submit").addEventListener("click", submitHandler);
 
 
 
-// quotable api call to use.
-var happiness = "happiness"
-var wisdom = "wisdom"
-
+//Calls for quote from Quotable API based on specific keys. Prints them to page based on gains/losses of user.
+//Changed color of text/background for quote <div> based on gains/losses of user.
 function displayQuote(){
     setTimeout(function(){
         var buySpot = JSON.parse(localStorage.getItem("buySpot"))
@@ -336,7 +332,7 @@ function displayQuote(){
     }, 300);
 };
 
-document.getElementById("recent").addEventListener("click", previousInput)
+//Function to grab previous search from localStorage and insert into form for use again if desired.
 function previousInput() {
     var userInput = JSON.parse(localStorage.getItem("userInput"))
     var amountInput = userInput.amountInput
@@ -353,3 +349,7 @@ function previousInput() {
     event.preventDefault()
 }
 
+//Event listener for submit button. Runs submitHandler();.
+document.getElementById("submit").addEventListener("click", submitHandler);
+//Event listener for use previous search button. Runs previousInput();
+document.getElementById("recent").addEventListener("click", previousInput)
