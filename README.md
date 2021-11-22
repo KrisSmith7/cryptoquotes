@@ -23,10 +23,10 @@ This is Project 1 of the Bootcamp. This website application is for your emotiona
 
 ## API's Used
 * Coinbase Digital Currency API
-* ZenQuotes API
+* Quotable Quotes API
 
 ## Demo
-* (Placeholder)
+![Demo of CryptoQuotes application.](https://j.gifs.com/k26AQY.gif)
 
 ## Websites
 * Deployed Application: https://krissmith7.github.io/cryptoquotes/

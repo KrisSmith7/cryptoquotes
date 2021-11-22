@@ -27,17 +27,17 @@ var priceSpotOut = document.getElementById("priceSpot");
 var differenceOut = document.getElementById("difference")
 var dateSpotOut = document.getElementById("dateSpot")
 
-var down = ["Oof.. That's not good.", "Uh Oh.. Time to get a second job!", 
-            "HAHA.. If I don't laugh, i'll cry.", "Wow, that didn't go as planned!", 
-            "Oy vey..", "Looks like It's ramen for a week.", 
+var down = ["Oof...That's not good.", "Uh Oh...Time to get a second job!", 
+            "HAHA...If I don't laugh, I'll cry.", "Wow, that didn't go as planned!", 
+            "Oy vey..", "Looks like it's ramen for a week.", 
             "I should have heeded the warnings.", ">.<", 
-            "TikTok made it look so easy...", "Maybe i should donate blood."];
+            "TikTok made it look so easy...", "Maybe I should donate blood."];
 
 var up = ["HECK YEAH!!", "Let's get that bread!", 
-          "Make that money!", "And they said i couldn't do it!", 
+          "Make that money!", "And they said I couldn't do it!", 
           ":O", "Steak for dinner!", 
-          "One, two, and a lambo for you!", "Hey look mom I made it!",
-          "Man, I wish i had a friend like me!", "High roller, comin through!"];
+          "One, two, and a lambo for you!", "Hey look, mom, I made it!",
+          "Man, I wish I had a friend like me!", "High roller, comin' through!"];
 
 // var test = {data: {amount: 1}};
 
