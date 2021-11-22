@@ -257,7 +257,7 @@ function getBuyPrice(input) {
         var difference = (priceSpot * 100 - buySpot * 100) / 100 * amountInput    
         var buySpot = new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(buySpot)
         var priceSpot = new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(priceSpot)
-        dateSpotOut.innerText = "Purchased " + amountInput + " " + currencyInput + " on " + buyDay + "/" + buyMonth + "/" + buyYear
+        dateSpotOut.innerText = "Purchased " + amountInput + " " + currencyInput + " on " + buyMonth + "/" + buyDay + "/" + buyYear
         buySpotOut.innerText = "You bought " + currencyInput + " at $" + buySpot
         priceSpotOut.innerText = "The current value is $" + priceSpot
         
@@ -276,7 +276,7 @@ function getBuyPrice(input) {
  
 $("#date").datepicker({maxDate: "0"});
 
-userForm.addEventListener("submit", submitHandler);
+document.getElementById("submit").addEventListener("click", submitHandler);
 
 
 
@@ -331,3 +331,21 @@ function displayQuote(){
         };
     }, 300);
 };
+
+document.getElementById("recent").addEventListener("click", previousInput)
+function previousInput() {
+    var userInput = JSON.parse(localStorage.getItem("userInput"))
+    var amountInput = userInput.amountInput
+    var currencyInput = userInput.currencyInput
+    var buyDay = userInput.buyDay
+    var buyMonth = userInput.buyMonth
+    var buyYear = userInput.buyYear
+    var dateForm = document.getElementById("date")
+    var currencyForm = document.getElementById("currency")
+    var amountForm = document.getElementById("amount")
+    amountForm.value = amountInput
+    currencyForm.value = currencyInput
+    dateForm.value = buyMonth + "/" + buyDay + "/" + buyYear
+    event.preventDefault()
+}
+
