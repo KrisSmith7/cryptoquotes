@@ -202,7 +202,7 @@ function getBuyPrice(input) {
 
 
  
-$("#date").datepicker();
+$("#date").datepicker({maxDate: "0"});
 
 userForm.addEventListener("submit", submitHandler);
 
