@@ -13,6 +13,12 @@
 
 var userForm = document.querySelector("#user-form");
 var cryptoDisplay = document.querySelector("#cryptodata");
+var formDiv = document.querySelector("#form")
+var buySpotOut = document.getElementById("buySpot");
+var priceSpotOut = document.getElementById("priceSpot");
+var differenceOut = document.getElementById("difference")
+var dateSpotOut = document.getElementById("dateSpot")
+
 var currentCoin;
 var userCoin;
 
@@ -22,10 +28,7 @@ var userCoinResult;
 var priceSpot = [];
 var buySpot = [];
 
-var buySpotOut = document.getElementById("buySpot");
-var priceSpotOut = document.getElementById("priceSpot");
-var differenceOut = document.getElementById("difference")
-var dateSpotOut = document.getElementById("dateSpot")
+
 
 var down = ["Oof...That's not good.", "Uh Oh...Time to get a second job!", 
             "HAHA...If I don't laugh, I'll cry.", "Wow, that didn't go as planned!", 
@@ -39,17 +42,46 @@ var up = ["HECK YEAH!!", "Let's get that bread!",
           "One, two, and a lambo for you!", "Hey look, mom, I made it!",
           "Man, I wish I had a friend like me!", "High roller, comin' through!"];
 
-// var test = {data: {amount: 1}};
 
 // takes info from user input and passes through to fetch request
 function submitHandler(event,currency, amount, date) {
     event.preventDefault();
+    
+    if (document.querySelector("#error-el")) {
+        document.querySelector("#error-el").remove();
+    }
+
+    formDiv.classList.add("border-blue-900");
+    formDiv.classList.add("bg-blue-100");
+
+    var currencyLabel = document.querySelector("#currency-label");
+    var currencyEl = document.querySelector("#currency");
+    var amountEl = document.querySelector("#amount");
+    var dateEl = document.querySelector("#date");
+
+    if (!currencyEl.value || !amountEl.value || !dateEl.value) {
+        formDiv.classList.remove("border-blue-900");
+        formDiv.classList.remove("bg-blue-100");
+        formDiv.classList.add("border-red-700");
+        formDiv.classList.add("bg-red-300");
+        
+        
+        var errorEl = document.createElement("p");
+        errorEl.id = "error-el"
+        errorEl.classList.add("text-red-700")
+        errorEl.textContent = "You must enter a valid cryptocurrency, date, and amount to generate a quote."
+
+        userForm.insertBefore(errorEl, currencyLabel)
+        return;
+        
+    }
 
 
 
-    var currency = document.querySelector("#currency").value;
-    var amount = document.querySelector("#amount").value;
-    var date = document.querySelector("#date").value;
+
+    var currency = currencyEl.value;
+    var amount = amountEl.value;
+    var date = dateEl.value;
     var formatDate = date.split("/");
 
     var userInput ={
@@ -96,7 +128,19 @@ function currentApiCall(input){
                     
             }) 
             } else {
-                // populate error area? 
+                formDiv.classList.remove("border-blue-900");
+                formDiv.classList.remove("bg-blue-100");
+                formDiv.classList.add("border-red-700");
+                formDiv.classList.add("bg-red-300");
+                
+                
+                var errorEl = document.createElement("p");
+                errorEl.id = "error-el"
+                errorEl.classList.add("text-red-700")
+                errorEl.textContent = "Coinbase can't seem to find data for that request. Try again later."
+        
+                userForm.insertBefore(errorEl, currencyLabel)
+                return; 
             }
             // priceSpot = priceSpot;
             //console.log('priceSpot:', priceSpot)
@@ -104,7 +148,19 @@ function currentApiCall(input){
         })
         .catch(function(error) {
             
-            // populate error with unable to connect to coinbase
+            formDiv.classList.remove("border-blue-900");
+            formDiv.classList.remove("bg-blue-100");
+            formDiv.classList.add("border-red-700");
+            formDiv.classList.add("bg-red-300");
+        
+        
+            var errorEl = document.createElement("p");
+            errorEl.id = "error-el"
+            errorEl.classList.add("text-red-700")
+            errorEl.textContent = "Wait, is Coinbase down? How am I going to sell my coin!?"
+
+            userForm.insertBefore(errorEl, currencyLabel)
+            return;
         });  
         //console.log('priceSpot:', priceSpot)
         return priceSpot;
@@ -133,12 +189,36 @@ function userApiCall(input){
         });
         
         } else {
-            // populate error area? 
+            formDiv.classList.remove("border-blue-900");
+            formDiv.classList.remove("bg-blue-100");
+            formDiv.classList.add("border-red-700");
+            formDiv.classList.add("bg-red-300");
+                
+                
+            var errorEl = document.createElement("p");
+            errorEl.id = "error-el"
+            errorEl.classList.add("text-red-700")
+            errorEl.textContent = "Coinbase can't seem to find data for that request. Try again later."
+        
+            userForm.insertBefore(errorEl, currencyLabel)
+            return;  
         }
         return buySpot;
     })
     .catch(function(error) {
-    //    populate error div with unable to connect to coinbase
+        formDiv.classList.remove("border-blue-900");
+        formDiv.classList.remove("bg-blue-100");
+        formDiv.classList.add("border-red-700");
+        formDiv.classList.add("bg-red-300");
+    
+    
+        var errorEl = document.createElement("p");
+        errorEl.id = "error-el"
+        errorEl.classList.add("text-red-700")
+        errorEl.textContent = "Wait, is Coinbase down? How am I going to sell my coin!?"
+
+        userForm.insertBefore(errorEl, currencyLabel)
+        return;
     });    
     return buySpot;
     
