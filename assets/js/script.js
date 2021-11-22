@@ -22,6 +22,10 @@ var userCoinResult;
 var priceSpot = [];
 var buySpot = [];
 
+var buySpotOut = document.getElementById("buySpot");
+var priceSpotOut = document.getElementById("priceSpot");
+var differenceOut = document.getElementById("difference")
+
 var down = ["Oof.. That's not good.", "Uh Oh.. Time to get a second job!", 
             "HAHA.. If I don't laugh, i'll cry.", "Wow, that didn't go as planned!", 
             "Oy vey..", "Looks like It's ramen for a week.", 
@@ -57,6 +61,7 @@ function submitHandler(event,currency, amount, date) {
    
     priceGrab(userInput);
     displayQuote();
+    gainOrLoss();
     document.getElementById("user-form").reset();
 };
 
@@ -83,6 +88,7 @@ function currentApiCall(input){
             if (response.ok) {
                 response.json().then( function(result) {
                     var priceSpot = getCurrentPrice(result);
+                    console.log(priceSpot)
                     localStorage.setItem("priceSpot", JSON.stringify(priceSpot));
                     console.log('priceSpot:', priceSpot)
                     return priceSpot;
@@ -170,16 +176,28 @@ function getBuyPrice(input) {
 
 
 
-// function gainOrLoss(a,b) {
-//     console.log(a)
-//     console.log(b)
-    // var buyPrice = getBuyPrice(userCoin);
-    // console.log(buyPrice);
-
-    // var currentPrice = getCurrentPrice(currentCoin);
-    // console.log(currentPrice);
-
-// }
+ function gainOrLoss() {
+     setTimeout(function(){
+        var buySpot = JSON.parse(localStorage.getItem("buySpot"))
+        buySpot.toLocaleString('en-US', {minimumFractionDigits:2})
+        console.log(buySpot)
+        var priceSpot = JSON.parse(localStorage.getItem("priceSpot"))
+        priceSpot.toLocaleString('en-US', {minimumFractionDigits:2})
+        var difference = (priceSpot * 100 - buySpot * 100) / 100
+        difference.toLocaleString('en-US', {minimumFractionDigits:2})
+        console.log(difference)
+        buySpotOut.innerText = "You bought at $" + buySpot
+        priceSpotOut.innerText = "The current value is $" + priceSpot
+        
+        if(difference < 0) {
+            differenceOut.innerText = "Your loss to date is $" + difference
+        }
+   
+        if(difference > 0) {
+            differenceOut.innerText = "Your gain to date is $" + difference
+        }
+     }, 400);
+ }
 
 
 
@@ -191,7 +209,6 @@ userForm.addEventListener("submit", submitHandler);
 
 
 // quotable api call to use.
-var qContainer = document.querySelector("#quote-container")
 var happiness = "happiness"
 var wisdom = "wisdom"
 
