@@ -219,6 +219,8 @@ function displayQuote(){
                 element.classList.remove("bg-gray-200")
                 element.classList.remove("bg-red-200")
                 element.classList.add("bg-green-200")
+                element.classList.remove("text-red-900")
+                element.classList.add("text-green-900")
             })
         } else {
             var chooseText = "wisdom" 
@@ -239,6 +241,8 @@ function displayQuote(){
                 element.classList.remove("bg-gray-200")
                 element.classList.remove("bg-green-200")
                 element.classList.add("bg-red-200")
+                element.classList.add("text-red-900")
+                element.classList.remove("text-green-900")
             })
         };
     }, 300);
