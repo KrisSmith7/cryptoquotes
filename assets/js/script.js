@@ -266,7 +266,7 @@ function getBuyPrice(input) {
         }
    
         if(difference > 0) {
-            differenceOut.innerText = "Your gain to date is $" + new Intl.NumberFormat().format(difference) 
+            differenceOut.innerText = "Your gain to date is $" + new Intl.NumberFormat("en-US", {maximumFractionDigits: 2, minimumFractionDigits: 2}).format(difference) 
         }
      }, 400);
  }
