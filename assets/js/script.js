@@ -13,6 +13,12 @@
 
 var userForm = document.querySelector("#user-form");
 var cryptoDisplay = document.querySelector("#cryptodata");
+var formDiv = document.querySelector("#form")
+var buySpotOut = document.getElementById("buySpot");
+var priceSpotOut = document.getElementById("priceSpot");
+var differenceOut = document.getElementById("difference")
+var dateSpotOut = document.getElementById("dateSpot")
+
 var currentCoin;
 var userCoin;
 
@@ -22,29 +28,62 @@ var userCoinResult;
 var priceSpot = [];
 var buySpot = [];
 
-var down = ["Oof.. That's not good.", "Uh Oh.. Time to get a second job!", 
-            "HAHA.. If I don't laugh, i'll cry.", "Wow, that didn't go as planned!", 
-            "Oy vey..", "Looks like It's ramen for a week.", 
+
+
+var down = ["Oof...That's not good.", "Uh Oh...Time to get a second job!", 
+            "HAHA...If I don't laugh, I'll cry.", "Wow, that didn't go as planned!", 
+            "Oy vey..", "Looks like it's ramen for a week.", 
             "I should have heeded the warnings.", ">.<", 
-            "TikTok made it look so easy...", "Maybe i should donate blood."];
+            "TikTok made it look so easy...", "Maybe I should donate blood."];
 
 var up = ["HECK YEAH!!", "Let's get that bread!", 
-          "Make that money!", "And they said i couldn't do it!", 
+          "Make that money!", "And they said I couldn't do it!", 
           ":O", "Steak for dinner!", 
-          "One, two, and a lambo for you!", "Hey look mom I made it!",
-          "Man, I wish i had a friend like me!", "High roller, comin through!"];
+          "One, two, and a lambo for you!", "Hey look, mom, I made it!",
+          "Man, I wish I had a friend like me!", "High roller, comin' through!"];
 
-// var test = {data: {amount: 1}};
 
 // takes info from user input and passes through to fetch request
 function submitHandler(event,currency, amount, date) {
     event.preventDefault();
+    
+    if (document.querySelector("#error-el")) {
+        document.querySelector("#error-el").remove();
+    }
+
+    formDiv.classList.remove("border-red-700");
+    formDiv.classList.remove("bg-red-300");
+    // formDiv.classList.add("border-blue-900");
+    // formDiv.classList.add("bg-blue-100");
+
+    var currencyLabel = document.querySelector("#currency-label");
+    var currencyEl = document.querySelector("#currency");
+    var amountEl = document.querySelector("#amount");
+    var dateEl = document.querySelector("#date");
+
+    if (!currencyEl.value || !amountEl.value || !dateEl.value) {
+        formDiv.classList.remove("border-blue-900");
+        formDiv.classList.remove("bg-blue-100");
+        formDiv.classList.add("border-red-700");
+        formDiv.classList.add("bg-red-300");
+        
+        
+        var errorEl = document.createElement("p");
+        errorEl.id = "error-el"
+        errorEl.classList.add("text-red-700")
+        errorEl.textContent = "You must enter a valid cryptocurrency, date, and amount to generate a quote."
+
+        userForm.insertBefore(errorEl, currencyLabel)
+        return;
+        
+    }
 
 
 
-    var currency = document.querySelector("#currency").value;
-    var amount = document.querySelector("#amount").value;
-    var date = document.querySelector("#date").value;
+
+    var currency = currencyEl.value;
+    var amount = amountEl.value;
+    var date = dateEl.value;
     var formatDate = date.split("/");
 
     var userInput ={
@@ -54,9 +93,11 @@ function submitHandler(event,currency, amount, date) {
         buyMonth: formatDate[0],
         buyYear: formatDate[2],
     }
+    localStorage.setItem("userInput", JSON.stringify(userInput));
    
     priceGrab(userInput);
     displayQuote();
+    gainOrLoss();
     document.getElementById("user-form").reset();
 };
 
@@ -67,11 +108,7 @@ function priceGrab(userInput) {
     //priceCompare(priceSpot, buySpot);
 }
 
-//function priceCompare(now, then) {
-    //console.log(now);
-    //console.log(then);
 
-//}
 
 
 function currentApiCall(input){
@@ -84,13 +121,24 @@ function currentApiCall(input){
                 response.json().then( function(result) {
                     var priceSpot = getCurrentPrice(result);
                     localStorage.setItem("priceSpot", JSON.stringify(priceSpot));
-                    console.log('priceSpot:', priceSpot)
                     return priceSpot;
                     
                     
             }) 
             } else {
-                // populate error area? 
+                formDiv.classList.remove("border-blue-900");
+                formDiv.classList.remove("bg-blue-100");
+                formDiv.classList.add("border-red-700");
+                formDiv.classList.add("bg-red-300");
+                
+                
+                var errorEl = document.createElement("p");
+                errorEl.id = "error-el"
+                errorEl.classList.add("text-red-700")
+                errorEl.textContent = "Coinbase can't seem to find data for that request. Try again later."
+        
+                userForm.insertBefore(errorEl, currencyLabel)
+                return; 
             }
             // priceSpot = priceSpot;
             //console.log('priceSpot:', priceSpot)
@@ -98,7 +146,19 @@ function currentApiCall(input){
         })
         .catch(function(error) {
             
-            // populate error with unable to connect to coinbase
+            formDiv.classList.remove("border-blue-900");
+            formDiv.classList.remove("bg-blue-100");
+            formDiv.classList.add("border-red-700");
+            formDiv.classList.add("bg-red-300");
+        
+        
+            var errorEl = document.createElement("p");
+            errorEl.id = "error-el"
+            errorEl.classList.add("text-red-700")
+            errorEl.textContent = "Wait, is Coinbase down? How am I going to sell my coin!?"
+
+            userForm.insertBefore(errorEl, currencyLabel)
+            return;
         });  
         //console.log('priceSpot:', priceSpot)
         return priceSpot;
@@ -119,7 +179,6 @@ function userApiCall(input){
             response.json().then(function(result) {
               var buySpot = getBuyPrice(result);
               localStorage.setItem("buySpot", JSON.stringify(buySpot));
-                console.log("buySpot", buySpot);
               return buySpot;
 
               
@@ -128,12 +187,36 @@ function userApiCall(input){
         });
         
         } else {
-            // populate error area? 
+            formDiv.classList.remove("border-blue-900");
+            formDiv.classList.remove("bg-blue-100");
+            formDiv.classList.add("border-red-700");
+            formDiv.classList.add("bg-red-300");
+                
+                
+            var errorEl = document.createElement("p");
+            errorEl.id = "error-el"
+            errorEl.classList.add("text-red-700")
+            errorEl.textContent = "Coinbase can't seem to find data for that request. Try again later."
+        
+            userForm.insertBefore(errorEl, currencyLabel)
+            return;  
         }
         return buySpot;
     })
     .catch(function(error) {
-    //    populate error div with unable to connect to coinbase
+        formDiv.classList.remove("border-blue-900");
+        formDiv.classList.remove("bg-blue-100");
+        formDiv.classList.add("border-red-700");
+        formDiv.classList.add("bg-red-300");
+    
+    
+        var errorEl = document.createElement("p");
+        errorEl.id = "error-el"
+        errorEl.classList.add("text-red-700")
+        errorEl.textContent = "Wait, is Coinbase down? How am I going to sell my coin!?"
+
+        userForm.insertBefore(errorEl, currencyLabel)
+        return;
     });    
     return buySpot;
     
@@ -145,7 +228,6 @@ function getCurrentPrice(input) {
     var price = input.data.amount;
     priceSpot.push(price);
 
-    // priceInfoElements(price);
     return price;
     
 }
@@ -154,44 +236,51 @@ function getBuyPrice(input) {
     var price = input.data.amount;
     buySpot.push(price);
 
-    // priceInfoElements(price);
     return price;
 }
 
-// function to create price elements
-// function priceInfoElements (input) {
-//     var priceEl = document.createElement("div");
-//     priceEl.textContent = input;
-
-//     cryptoDisplay.append(priceEl);
-
-// }
 
 
 
-
-// function gainOrLoss(a,b) {
-//     console.log(a)
-//     console.log(b)
-    // var buyPrice = getBuyPrice(userCoin);
-    // console.log(buyPrice);
-
-    // var currentPrice = getCurrentPrice(currentCoin);
-    // console.log(currentPrice);
-
-// }
+// Calculates loss to date and prints information out on page.
+ function gainOrLoss() {
+     setTimeout(function(){
+        var userInput = JSON.parse(localStorage.getItem("userInput"))
+        console.log(userInput)
+        var amountInput = userInput.amountInput
+        var currencyInput = userInput.currencyInput
+        var buyDay = userInput.buyDay
+        var buyMonth = userInput.buyMonth
+        var buyYear = userInput.buyYear
+        var buySpot = JSON.parse(localStorage.getItem("buySpot"))    
+        var priceSpot = JSON.parse(localStorage.getItem("priceSpot"))
+        var difference = (priceSpot * 100 - buySpot * 100) / 100 * amountInput    
+        var buySpot = new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(buySpot)
+        var priceSpot = new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(priceSpot)
+        dateSpotOut.innerText = "Purchased " + amountInput + " " + currencyInput + " on " + buyMonth + "/" + buyDay + "/" + buyYear
+        buySpotOut.innerText = "You bought " + currencyInput + " at $" + buySpot
+        priceSpotOut.innerText = "The current value is $" + priceSpot
+        
+        if(difference < 0) {
+            differenceOut.innerText = "Your loss to date is $" + new Intl.NumberFormat("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}).format(difference) 
+        }
+   
+        if(difference > 0) {
+            differenceOut.innerText = "Your gain to date is $" + new Intl.NumberFormat("en-US", {maximumFractionDigits: 2, minimumFractionDigits: 2}).format(difference) 
+        }
+     }, 400);
+ }
 
 
 
  
 $("#date").datepicker({maxDate: "0"});
 
-userForm.addEventListener("submit", submitHandler);
+document.getElementById("submit").addEventListener("click", submitHandler);
 
 
 
 // quotable api call to use.
-var qContainer = document.querySelector("#quote-container")
 var happiness = "happiness"
 var wisdom = "wisdom"
 
@@ -199,9 +288,8 @@ function displayQuote(){
     setTimeout(function(){
         var buySpot = JSON.parse(localStorage.getItem("buySpot"))
         var priceSpot = JSON.parse(localStorage.getItem("priceSpot"))
-        console.log(buySpot)
-        console.log(priceSpot)
-        if (buySpot < priceSpot ){
+        var difference = (priceSpot * 100 - buySpot * 100) / 100    
+        if (difference > 0 ){
             var chooseText = "happiness"
             var quoteURL = "https://api.quotable.io/random?tags=" + chooseText
             fetch (quoteURL)
@@ -247,3 +335,21 @@ function displayQuote(){
         };
     }, 300);
 };
+
+document.getElementById("recent").addEventListener("click", previousInput)
+function previousInput() {
+    var userInput = JSON.parse(localStorage.getItem("userInput"))
+    var amountInput = userInput.amountInput
+    var currencyInput = userInput.currencyInput
+    var buyDay = userInput.buyDay
+    var buyMonth = userInput.buyMonth
+    var buyYear = userInput.buyYear
+    var dateForm = document.getElementById("date")
+    var currencyForm = document.getElementById("currency")
+    var amountForm = document.getElementById("amount")
+    amountForm.value = amountInput
+    currencyForm.value = currencyInput
+    dateForm.value = buyMonth + "/" + buyDay + "/" + buyYear
+    event.preventDefault()
+}
+
