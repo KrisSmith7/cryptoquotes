@@ -17,5 +17,20 @@
   /* end combobox styles */
  
   .gradient {
-    background: linear-gradient(145deg, #0081A7 0%, #ACD8AA 100%);
-  }
+  background: linear-gradient(145deg, #528b8c 0%, #1f2544 100%);
+}
+.gradient2 {
+  background: linear-gradient(145deg, #2f455b 0%, #1f2544 100%);
+}
+.bg-pattern {
+    background-image:linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2)), url("../hero-bg.jpg");
+height: 50%;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+position: relative;
+}
+
+.drop-shadow {
+filter: drop-shadow(15px 15px 10px black)
+}
