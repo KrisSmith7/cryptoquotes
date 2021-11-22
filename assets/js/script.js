@@ -25,6 +25,7 @@ var buySpot = [];
 var buySpotOut = document.getElementById("buySpot");
 var priceSpotOut = document.getElementById("priceSpot");
 var differenceOut = document.getElementById("difference")
+var dateSpotOut = document.getElementById("dateSpot")
 
 var down = ["Oof.. That's not good.", "Uh Oh.. Time to get a second job!", 
             "HAHA.. If I don't laugh, i'll cry.", "Wow, that didn't go as planned!", 
@@ -58,6 +59,7 @@ function submitHandler(event,currency, amount, date) {
         buyMonth: formatDate[0],
         buyYear: formatDate[2],
     }
+    localStorage.setItem("userInput", JSON.stringify(userInput));
    
     priceGrab(userInput);
     displayQuote();
@@ -88,9 +90,7 @@ function currentApiCall(input){
             if (response.ok) {
                 response.json().then( function(result) {
                     var priceSpot = getCurrentPrice(result);
-                    console.log(priceSpot)
                     localStorage.setItem("priceSpot", JSON.stringify(priceSpot));
-                    console.log('priceSpot:', priceSpot)
                     return priceSpot;
                     
                     
@@ -125,7 +125,6 @@ function userApiCall(input){
             response.json().then(function(result) {
               var buySpot = getBuyPrice(result);
               localStorage.setItem("buySpot", JSON.stringify(buySpot));
-                console.log("buySpot", buySpot);
               return buySpot;
 
               
@@ -151,7 +150,6 @@ function getCurrentPrice(input) {
     var price = input.data.amount;
     priceSpot.push(price);
 
-    // priceInfoElements(price);
     return price;
     
 }
@@ -160,41 +158,37 @@ function getBuyPrice(input) {
     var price = input.data.amount;
     buySpot.push(price);
 
-    // priceInfoElements(price);
     return price;
 }
 
-// function to create price elements
-// function priceInfoElements (input) {
-//     var priceEl = document.createElement("div");
-//     priceEl.textContent = input;
-
-//     cryptoDisplay.append(priceEl);
-
-// }
 
 
 
-
+// Calculates loss to date and prints information out on page.
  function gainOrLoss() {
      setTimeout(function(){
-        var buySpot = JSON.parse(localStorage.getItem("buySpot"))
-        buySpot.toLocaleString('en-US', {minimumFractionDigits:2})
-        console.log(buySpot)
+        var userInput = JSON.parse(localStorage.getItem("userInput"))
+        console.log(userInput)
+        var amountInput = userInput.amountInput
+        var currencyInput = userInput.currencyInput
+        var buyDay = userInput.buyDay
+        var buyMonth = userInput.buyMonth
+        var buyYear = userInput.buyYear
+        var buySpot = JSON.parse(localStorage.getItem("buySpot"))    
         var priceSpot = JSON.parse(localStorage.getItem("priceSpot"))
-        priceSpot.toLocaleString('en-US', {minimumFractionDigits:2})
-        var difference = (priceSpot * 100 - buySpot * 100) / 100
-        difference.toLocaleString('en-US', {minimumFractionDigits:2})
-        console.log(difference)
-        buySpotOut.innerText = "You bought at $" + buySpot
+        var difference = (priceSpot * 100 - buySpot * 100) / 100 * amountInput    
+        var buySpot = new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(buySpot)
+        var priceSpot = new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(priceSpot)
+        dateSpotOut.innerText = "Purchased " + amountInput + " " + currencyInput + " on " + buyDay + "/" + buyMonth + "/" + buyYear
+        buySpotOut.innerText = "You bought " + currencyInput + " at $" + buySpot
         priceSpotOut.innerText = "The current value is $" + priceSpot
         
         if(difference < 0) {
-            differenceOut.innerText = "Your loss to date is $" + difference
+            differenceOut.innerText = "Your loss to date is $" + new Intl.NumberFormat("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}).format(difference) 
         }
    
         if(difference > 0) {
-            differenceOut.innerText = "Your gain to date is $" + difference
+            differenceOut.innerText = "Your gain to date is $" + new Intl.NumberFormat().format(difference) 
         }
      }, 400);
  }
@@ -216,8 +210,6 @@ function displayQuote(){
     setTimeout(function(){
         var buySpot = JSON.parse(localStorage.getItem("buySpot"))
         var priceSpot = JSON.parse(localStorage.getItem("priceSpot"))
-        console.log(buySpot)
-        console.log(priceSpot)
         if (buySpot < priceSpot ){
             var chooseText = "happiness"
             var quoteURL = "https://api.quotable.io/random?tags=" + chooseText
