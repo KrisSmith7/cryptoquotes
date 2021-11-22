@@ -290,7 +290,8 @@ function displayQuote(){
     setTimeout(function(){
         var buySpot = JSON.parse(localStorage.getItem("buySpot"))
         var priceSpot = JSON.parse(localStorage.getItem("priceSpot"))
-        if (buySpot < priceSpot ){
+        var difference = (priceSpot * 100 - buySpot * 100) / 100    
+        if (difference > 0 ){
             var chooseText = "happiness"
             var quoteURL = "https://api.quotable.io/random?tags=" + chooseText
             fetch (quoteURL)
