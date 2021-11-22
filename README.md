@@ -26,7 +26,7 @@ This is Project 1 of the Bootcamp. This website application is for your emotiona
 * Quotable Quotes API
 
 ## Demo
-![Demo of CryptoQuotes application.](https://j.gifs.com/k26AQY.gif)
+![Demo of CryptoQuotes application.](./assets/CryptoQuotes.gif)
 
 ## Websites
 * Deployed Application: https://krissmith7.github.io/cryptoquotes/
