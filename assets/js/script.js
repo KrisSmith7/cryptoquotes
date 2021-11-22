@@ -51,8 +51,10 @@ function submitHandler(event,currency, amount, date) {
         document.querySelector("#error-el").remove();
     }
 
-    formDiv.classList.add("border-blue-900");
-    formDiv.classList.add("bg-blue-100");
+    formDiv.classList.remove("border-red-700");
+    formDiv.classList.remove("bg-red-300");
+    // formDiv.classList.add("border-blue-900");
+    // formDiv.classList.add("bg-blue-100");
 
     var currencyLabel = document.querySelector("#currency-label");
     var currencyEl = document.querySelector("#currency");
@@ -106,11 +108,7 @@ function priceGrab(userInput) {
     //priceCompare(priceSpot, buySpot);
 }
 
-//function priceCompare(now, then) {
-    //console.log(now);
-    //console.log(then);
 
-//}
 
 
 function currentApiCall(input){
