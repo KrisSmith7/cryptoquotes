@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <!-- <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"> -->
     <link href="./assets/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aldrich&family=Raleway&display=swap">
     <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
@@ -14,7 +13,6 @@
 </head>
 
 <body style ="font-family:'Raleway', sans-serif;" class="flex flex-col min-h-screen text-blue-100 font-bold text-2xl">
-    <!-- <header class = "bg-gradient-to-t from-blue-900 to-blue-300"> -->
     <header class="bg-pattern flex-no-shrink">
         <h1 style="font-family: 'Aldrich', serif;" class="text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold pt-8 pb-8 text-center">
             CryptoQuotes
@@ -26,7 +24,7 @@
             <p id ="quote"></p>
         </div>
     </section>
-
+    <!--Form section of page. Styled with TailwindCSS-->
     <section class="flex-grow pt-5 pb-5 bg-pattern">
         <div class=" mx-auto flex flex-wrap items-stretch justify-around mt-0 py-2">
             <div id="form" class="drop-shadow box-border w-full md:w-1/3 p-4 border-4 border-blue-900 rounded-md m-4">
@@ -49,15 +47,15 @@
                 </div>
                 </form>
             </div> 
-
-<div id=cryptodata class="gradient2 text-center drop-shadow text-3xl pt-10 m-4 w-full border-blue-900 rounded-md border-4 md:w-3/5">
-    <p id ="dateSpot" class="pb-8">Fill in form with:</p>
-    <p id="buySpot" class="pb-8">* Type of coin</p>
-    <p id="priceSpot" class="pb-8">* Month purchased</p>
-    <p id="difference" class="pb-8">* Amount purchased. <br>Submit!</br></p>
-</div>
-</div>
-</section>
+            <!--Output section of page. Styled with TailwindCSS-->
+            <div id=cryptodata class="gradient2 text-center drop-shadow text-3xl pt-10 m-4 w-full border-blue-900 rounded-md border-4 md:w-3/5">
+                <p id ="dateSpot" class="pb-8">Fill in form with:</p>
+                <p id="buySpot" class="pb-8">* Type of coin</p>
+                <p id="priceSpot" class="pb-8">* Date purchased</p>
+                <p id="difference" class="pb-8">* Amount purchased <br>Submit!</br></p>
+            </div>
+        </div>
+    </section>
 
       <footer class="w-full gradient text-blue-100 text-center p-4">&copy;2021 - Group 6</footer>
 
