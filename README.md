@@ -1,5 +1,5 @@
-# Project 1: CryptoQuotes
-This is Project 1 of the Bootcamp. This website application is for your emotional cryptoholders. The page will show a snapshot of users' cryptocurrency values today compared to the value of when they bought it. The app will provide the user with a motivational or inspirational quote based on if the user has gained or lost. 
+# CryptoQuotes
+This website application is for your emotional cryptoholders. The page will show a snapshot of users' cryptocurrency values today compared to the value of when they bought it. The app will provide the user with a motivational or inspirational quote based on if the user has gained or lost. 
 
 ## Installation
 1. Download or clone the Repository
